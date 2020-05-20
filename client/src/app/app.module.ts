@@ -10,6 +10,14 @@ import { AuthLayoutComponent } from './shared/layout/auth-layout/auth-layout.com
 import { SiteLayoutComponent } from './shared/layout/site-layout/site-layout.component';
 import { PageRegisterComponent } from './page-register/page-register.component';
 import { TokenInterceptor } from './shared/classes/token.interceptor';
+import { PageOverviewComponent } from './page-overview/page-overview.component';
+import { PageAnalyticsComponent } from './page-analytics/page-analytics.component';
+import { PageHistoryComponent } from './page-history/page-history.component';
+import { PageOrderComponent } from './page-order/page-order.component';
+import { PageCategoriesComponent } from './page-categories/page-categories.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
+import { CategoriesFormComponent } from './page-categories/categories-form/categories-form.component';
+import { PositionsFormComponent } from './page-categories/categories-form/positions-form/positions-form.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +25,15 @@ import { TokenInterceptor } from './shared/classes/token.interceptor';
     PageLoginComponent,
     AuthLayoutComponent,
     SiteLayoutComponent,
-    PageRegisterComponent
+    PageRegisterComponent,
+    PageOverviewComponent,
+    PageAnalyticsComponent,
+    PageHistoryComponent,
+    PageOrderComponent,
+    PageCategoriesComponent,
+    LoaderComponent,
+    CategoriesFormComponent,
+    PositionsFormComponent
   ],
   imports: [
     BrowserModule,

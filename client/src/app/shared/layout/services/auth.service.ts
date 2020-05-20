@@ -17,7 +17,6 @@ export class AuthService {
   }
 
   register(user: User): Observable<User> {
-    console.log('register работает')
     return this.http.post<User>('/api/auth/register', user)
   }
 
