@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } fr
 import { MaterialInstance, MaterialService } from '../shared/classes/material.classes';
 import { OrdersService } from '../shared/layout/services/order.service';
 import { Subscription } from 'rxjs';
-import { Order } from '../shared/interfaces';
+import { Order, Filter } from '../shared/interfaces';
 
 @Component({
   selector: 'app-page-history',
@@ -22,6 +22,7 @@ export class PageHistoryComponent implements OnInit, OnDestroy, AfterViewInit {
   oSub: Subscription
 
   orders: Order[] = []
+  filter: Filter = {}
 
   loading = false
   reloading = false
@@ -37,10 +38,14 @@ export class PageHistoryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private fetch() {
-    const params = {
+    // const params = {
+    //   offset: this.offset,
+    //   limit: this.limit
+    // }
+    const params = Object.assign({}, this.filter, {
       offset: this.offset,
       limit: this.limit
-    }
+    })
     this.oSub = this.ordersService.fetch(params).subscribe(orders => {
       this.orders = this.orders.concat(orders)
       this.loading = false
@@ -62,6 +67,18 @@ export class PageHistoryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.tooltip = MaterialService.initTooltip(this.tooltipRef)
+  }
+
+  applyFilter(filter: Filter) {
+    this.orders = []
+    this.offset = 0
+    this.filter = filter
+    this.reloading = true
+    this.fetch()
+  }
+
+  isFiltered(): boolean {
+    return Object.keys(this.filter).length != 0
   }
 
 }
