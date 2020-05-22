@@ -18,6 +18,8 @@ import { PageCategoriesComponent } from './page-categories/page-categories.compo
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { CategoriesFormComponent } from './page-categories/categories-form/categories-form.component';
 import { PositionsFormComponent } from './page-categories/categories-form/positions-form/positions-form.component';
+import { OrderCategoriesComponent } from './page-order/order-categories/order-categories.component';
+import { OrderPositionsComponent } from './page-order/order-positions/order-positions.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { PositionsFormComponent } from './page-categories/categories-form/positi
     PageCategoriesComponent,
     LoaderComponent,
     CategoriesFormComponent,
-    PositionsFormComponent
+    PositionsFormComponent,
+    OrderCategoriesComponent,
+    OrderPositionsComponent
   ],
   imports: [
     BrowserModule,
