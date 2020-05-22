@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { MaterialInstance, MaterialService } from '../shared/classes/material.classes';
+import { OrdersService } from '../shared/layout/services/order.service';
+import { Subscription } from 'rxjs';
+import { Order } from '../shared/interfaces';
 
 @Component({
   selector: 'app-page-history',
@@ -12,13 +15,49 @@ export class PageHistoryComponent implements OnInit, OnDestroy, AfterViewInit {
   tooltip: MaterialInstance
   isFilterVisible = false
 
-  constructor() { }
+  offset = 0
+  step = 2
+  limit = this.step
+
+  oSub: Subscription
+
+  orders: Order[] = []
+
+  loading = false
+  reloading = false
+  noMoreOrders = false
+
+  constructor(
+    private ordersService: OrdersService
+  ) { }
 
   ngOnInit(): void {
+    this.reloading = true
+    this.fetch()
+  }
+
+  private fetch() {
+    const params = {
+      offset: this.offset,
+      limit: this.limit
+    }
+    this.oSub = this.ordersService.fetch(params).subscribe(orders => {
+      this.orders = this.orders.concat(orders)
+      this.loading = false
+      this.reloading = false
+      this.noMoreOrders = orders.length < this.step
+    })
+  }
+
+  loadMore() {
+    this.offset += this.step
+    this.loading = true
+    this.fetch()
   }
 
   ngOnDestroy() {
     this.tooltip.destroy()
+    this.oSub.unsubscribe()
   }
 
   ngAfterViewInit() {
