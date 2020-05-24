@@ -6,7 +6,9 @@ module.exports.overview = async function (req, res) {
   try {
     const allOrders = await Order.find({
       user: req.user.id
-    }).sort(1)
+    }).sort({
+      date: 1
+    })
 
     const ordersMap = getOrdersMap(allOrders)
     const yesterdayOrders = ordersMap[moment().add(-1, 'd').format('DD.MM.YYYY')] || []
@@ -19,6 +21,7 @@ module.exports.overview = async function (req, res) {
 
     // Количество дней всего
     const daysNumber = Object.keys(ordersMap).length
+
     // Заказов в день
     const ordersPerDay = (totalOrdersNumber / daysNumber).toFixed(0)
     // Процент для кол-ва заказов
@@ -32,13 +35,14 @@ module.exports.overview = async function (req, res) {
     const gainPerDay = totalGain / daysNumber
 
     // Выручка за вчера
-    const yesterdayGain = calculatePrice()
+    const yesterdayGain = calculatePrice(yesterdayOrders)
 
     // Процент выручки
     const gainPrecent = (((yesterdayGain / gainPerDay) - 1) * 100).toFixed(2)
 
     // Сравнение выручки
-    const compareGain = (yesterdayGain / gainPerDay).toFixed(2)
+    const compareGain = (gainPerDay).toFixed(2)
+
     // Сравнение количества заказов
     const compareNumber = (yesterdayOrdersNumber - ordersPerDay).toFixed(2)
 
@@ -62,8 +66,37 @@ module.exports.overview = async function (req, res) {
   }
 }
 
-module.exports.analytic = function (req, res) {
+module.exports.analytic = async function (req, res) {
+  try {
+    const allOrders = await Order.find({
+      user: req.user.id
+    }).sort({
+      date: 1
+    })
 
+    const ordersMap = getOrdersMap(allOrders)
+
+    const average = +(calculatePrice(allOrders) / Object.keys(ordersMap).length).toFixed(2)
+
+    const chart = Object.keys(ordersMap).map(label => {
+      const gain = calculatePrice(ordersMap[label])
+      const order = ordersMap[label].length
+      return {
+        label,
+        order,
+        gain
+      }
+    })
+
+    res.status(200).json({
+      average,
+      chart
+    })
+
+  } catch (e) {
+    errorHandler(res, e)
+
+  }
 }
 
 function getOrdersMap(orders = []) {

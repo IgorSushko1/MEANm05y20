@@ -27,7 +27,6 @@ export class PageOrderComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('order', this.order);
     this.isRoot = this.router.url === '/order'
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -81,7 +80,6 @@ export class PageOrderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   removePosition(orderPosition: OrderPosition) {
-    debugger
     this.order.remove(orderPosition)
   }
 
