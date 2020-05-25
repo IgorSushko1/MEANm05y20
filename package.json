@@ -4,8 +4,8 @@
   "description": "full stack app with angular and nodejs",
   "main": "index.js",
   "engines": {
-    "node": "10.15.3",
-    "npm": "6.4.1"
+    "node": "^10.15.3",
+    "npm": "^6.4.1"
   },
   "scripts": {
     "start": "node index",
@@ -13,7 +13,7 @@
     "client-install": "npm install --prefix client",
     "client-server": "npm run start --prefix client",
     "dev": "concurrently \" npm run server \" \"npm run client-server\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run client-install && npm run build --prefix client"
+    "heroku-postbuild": " npm run client-install && npm run build --prefix client"
   },
   "keywords": [
     "axpress",
