@@ -1,4 +1,4 @@
 module.exports = {
-  mongoURI: process.env.MONGO_URI,
-  jwt: process.env.JWT // jwt ключ для шифрования
+  mongoURI: process.env.mongoURI,
+  jwt: process.env.jwt // jwt ключ для шифрования
 }
