@@ -11,7 +11,8 @@ A code that i wrote following course on Udemy
 
 Далее в папке ```config``` необходимо в файле ```keys.js``` удалить содержимое и вставить следующий код
 
-```module.exports = {
+```
+module.exports = {
   mongoURI: '', // в кавычках указать mongoURI !!!
   jwt: 'dev-jwt' // jwt ключ для шифрования
 }
